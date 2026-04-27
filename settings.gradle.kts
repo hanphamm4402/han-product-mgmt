@@ -4,4 +4,4 @@ pluginManagement {
         mavenCentral()
     }
 }
-rootProject.name = "han-product-management"
+rootProject.name = "han-product-mgmt"

@@ -1,13 +1,11 @@
-package org.example.hanproductmngt
+package com.han.productmanagement
 
 import org.junit.jupiter.api.Test
 import org.springframework.boot.test.context.SpringBootTest
 
 @SpringBootTest
-class HanProductMngtApplicationTests {
-
+class ApplicationTests {
     @Test
     fun contextLoads() {
     }
-
 }

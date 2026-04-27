@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<body>
+<th:block th:fragment="productForm">
+    <form>
+        <fieldset>
+            <legend>Product Form</legend>
+            <input type="text" name="name" placeholder="Product name" />
+            <input type="text" name="externalId" placeholder="External id" />
+            <wa-button type="submit">Submit</wa-button>
+        </fieldset>
+    </form>
+</th:block>
+</body>
+</html>

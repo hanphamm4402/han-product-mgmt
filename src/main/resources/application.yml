@@ -1,8 +1,8 @@
 spring:
   application:
-    name: han-product-management
+    name: han-product-mgmt
   datasource:
-    url: ${DB_URL:jdbc:postgresql://localhost:5432/han_product_mngt}
+    url: ${DB_URL:jdbc:postgresql://localhost:5432/han_product_mgmt}
     username: ${DB_USERNAME:postgres}
     password: ${DB_PASSWORD:postgres}
     driver-class-name: org.postgresql.Driver
@@ -26,5 +26,5 @@ logging:
     org.flywaydb: INFO
 
 app:
-  scheduling:
-    product-audit-delay: ${PRODUCT_AUDIT_DELAY:PT24H}
+  integration:
+    famme-base-url: ${FAMME_BASE_URL:https://example.com}
