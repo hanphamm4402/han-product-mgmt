@@ -49,3 +49,9 @@ document.addEventListener("htmx:beforeRequest", (event) => {
 document.addEventListener("htmx:afterRequest", (event) => {
     setButtonLoading(htmxSourceElement(event), false);
 });
+
+document.addEventListener("submit", (event) => {
+    if (!event.defaultPrevented) {
+        setButtonLoading(event.target, true);
+    }
+});
