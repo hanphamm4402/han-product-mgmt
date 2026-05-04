@@ -2,12 +2,11 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <body>
 <div id="product-results" class="wa-stack wa-gap-m" th:fragment="productResults">
-    <template>
-        <wa-badge id="product-count-badge"
-                  variant="brand"
-                  th:text="${productCount}"
-                  hx-swap-oob="outerHTML">0</wa-badge>
-    </template>
+    <wa-badge th:if="${isHtmxRequest}"
+              id="product-count-badge"
+              variant="brand"
+              th:text="${productCount}"
+              hx-swap-oob="outerHTML">0</wa-badge>
 
     <wa-callout th:if="${tableError}" variant="danger">
         <wa-icon slot="icon" name="circle-exclamation"></wa-icon>

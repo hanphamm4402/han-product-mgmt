@@ -8,10 +8,11 @@
 
     <div class="wa-split wa-gap-m wa-align-items-end">
         <wa-input id="product-search"
-                  name="q"
+                  name="query"
                   placeholder="Search by title"
-                  size="medium"
-                  hx-get="/product/table"
+                  size="m"
+                  th:value="${searchQuery}"
+                  hx-get="/product"
                   hx-trigger="input changed delay:300ms, search"
                   hx-target="#product-results"
                   hx-swap="outerHTML">
