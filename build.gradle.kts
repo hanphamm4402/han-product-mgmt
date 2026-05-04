@@ -1,11 +1,10 @@
 plugins {
-    kotlin("jvm") version "2.4.0-Beta2"
     kotlin("plugin.spring") version "2.4.0-Beta2"
+    kotlin("jvm") version "2.4.0-Beta2"
     kotlin("plugin.jpa") version "2.4.0-Beta2"
     kotlin("plugin.allopen") version "2.4.0-Beta2"
     id("org.springframework.boot") version "4.1.0-RC1"
     id("io.spring.dependency-management") version "1.1.7"
-    id("org.hibernate.orm") version "8.0.0.Alpha1"
 }
 
 group = "com.han"
@@ -32,10 +31,9 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-webmvc")
     implementation("org.springframework.boot:spring-boot-starter-thymeleaf")
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
-    implementation("org.springframework.boot:spring-boot-hibernate")
     implementation("org.springframework.boot:spring-boot-starter-validation")
     implementation("org.flywaydb:flyway-core")
-    runtimeOnly("org.flywaydb:flyway-database-postgresql:12.4.0")
+    runtimeOnly("org.flywaydb:flyway-database-postgresql:12.5.0")
     runtimeOnly("org.postgresql:postgresql")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("tools.jackson.module:jackson-module-kotlin")
