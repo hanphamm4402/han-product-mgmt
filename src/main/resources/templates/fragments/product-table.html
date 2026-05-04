@@ -23,7 +23,7 @@
             <tr th:if="${#lists.isEmpty(products)}">
                 <td colspan="6">No products loaded.</td>
             </tr>
-            <tr th:each="product : ${products}">
+            <tr data-product-row th:each="product : ${products}">
                 <td>
                     <a th:href="@{/product/{id}(id=${product.id})}" th:text="${product.title}">Product</a>
                 </td>
