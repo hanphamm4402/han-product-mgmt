@@ -12,6 +12,7 @@ import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertThrows
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.boot.test.context.TestConfiguration
 import org.springframework.context.annotation.Bean
@@ -19,7 +20,7 @@ import org.springframework.context.annotation.Primary
 import java.math.BigDecimal
 
 @SpringBootTest
-class ProductServiceTests(
+class ProductServiceTests @Autowired constructor(
     private val productService: ProductService,
     private val productRepository: ProductRepository,
     private val fakeFammeClient: FakeFammeClient,
