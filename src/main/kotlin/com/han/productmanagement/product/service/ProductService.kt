@@ -90,10 +90,10 @@ class ProductService(
 
     @Transactional
     fun importProducts(products: List<ExternalProductDto>): Int {
-        return products.take(50).count(::upsertExternalProduct)
+        return products.take(50).count(::createExternalProduct)
     }
 
-    private fun upsertExternalProduct(external: ExternalProductDto): Boolean {
+    private fun createExternalProduct(external: ExternalProductDto): Boolean {
         val productTypeName = external.productType.trim()
         val productType = productTypeName.takeIf(String::isNotBlank)?.let(productTypeRepository::findByName)
         if (productType == null) {
@@ -101,8 +101,8 @@ class ProductService(
             return false
         }
 
-        val product = productRepository.findWithDetailsById(external.id) ?: ProductEntity(
-            id = external.id,
+        val product = ProductEntity(
+            id = productRepository.nextId(),
             createdAt = parseTimestamp(external.createdAt),
         )
 
@@ -115,7 +115,7 @@ class ProductService(
 
         val variants = external.variants.map { variant ->
             VariantEntity(
-                id = variant.id,
+                id = variantRepository.nextId(),
                 title = variant.title,
                 sku = variant.sku,
                 available = variant.available,

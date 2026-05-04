@@ -53,18 +53,28 @@ class ProductServiceTests @Autowired constructor(
     }
 
     @Test
-    fun `import updates existing products and variants without duplicates`() {
+    fun `import creates new products instead of updating previous external products`() {
         fakeFammeClient.products = listOf(externalProduct(1, title = "Initial title", variantTitle = "Initial variant"))
         productService.importProductsFromSource()
+        val initialProductId = productService.listProducts().single().id
 
         fakeFammeClient.products = listOf(externalProduct(1, title = "Updated title", variantTitle = "Updated variant"))
         productService.importProductsFromSource()
 
         val products = productService.listProducts()
-        val form = productService.getProductForm(1)
-        assertEquals(1, products.size)
-        assertEquals("Updated title", form.title)
-        assertEquals("Updated variant", form.variants.single().title)
+        assertEquals(2, products.size)
+        assertEquals("Initial title", productService.getProductForm(initialProductId).title)
+        assertEquals(true, products.any { it.title == "Updated title" })
+    }
+
+    @Test
+    fun `import uses internal product ids instead of external product ids`() {
+        fakeFammeClient.products = listOf(externalProduct(999))
+
+        productService.importProductsFromSource()
+
+        val importedProduct = productService.listProducts().single()
+        assertEquals(false, importedProduct.id == 999L)
     }
 
     @Test
