@@ -7,5 +7,8 @@ import org.springframework.web.client.RestClient
 @Configuration
 class SchedulingConfig {
     @Bean
+    fun restClientBuilder(): RestClient.Builder = RestClient.builder()
+
+    @Bean
     fun restClient(builder: RestClient.Builder): RestClient = builder.build()
 }
