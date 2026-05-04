@@ -11,6 +11,7 @@ import com.han.productmanagement.product.integration.FammeClientPort
 import com.han.productmanagement.product.repository.ProductRepository
 import com.han.productmanagement.product.repository.ProductTypeRepository
 import com.han.productmanagement.product.repository.VariantRepository
+import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import java.math.BigDecimal
@@ -24,6 +25,8 @@ class ProductService(
     private val variantRepository: VariantRepository,
     private val fammeClient: FammeClientPort,
 ) {
+    private val logger = LoggerFactory.getLogger(javaClass)
+
     @Transactional(readOnly = true)
     fun listProducts(): List<ProductListItemDto> =
         productRepository.findAllWithDetails().map(ProductMapper::toListItem)
@@ -82,18 +85,22 @@ class ProductService(
     @Transactional
     fun importProductsFromSource(): Int {
         val products = fammeClient.fetchProducts().take(50)
-        importProducts(products)
-        return products.size
+        return importProducts(products)
     }
 
     @Transactional
-    fun importProducts(products: List<ExternalProductDto>) {
-        products.take(50).forEach(::upsertExternalProduct)
+    fun importProducts(products: List<ExternalProductDto>): Int {
+        return products.take(50).count(::upsertExternalProduct)
     }
 
-    private fun upsertExternalProduct(external: ExternalProductDto) {
-        val productType = productTypeRepository.findByName(external.productType)
-            ?: throw ApplicationException("Product type '${external.productType}' is not seeded.")
+    private fun upsertExternalProduct(external: ExternalProductDto): Boolean {
+        val productTypeName = external.productType.trim()
+        val productType = productTypeName.takeIf(String::isNotBlank)?.let(productTypeRepository::findByName)
+        if (productType == null) {
+            logger.debug("Skipping product {} because product type '{}' is not seeded.", external.id, productTypeName)
+            return false
+        }
+
         val product = productRepository.findWithDetailsById(external.id) ?: ProductEntity(
             id = external.id,
             createdAt = parseTimestamp(external.createdAt),
@@ -119,6 +126,7 @@ class ProductService(
         }
         product.replaceVariants(variants)
         productRepository.save(product)
+        return true
     }
 
     private fun validateAtLeastOneVariant(form: ProductFormDto) {

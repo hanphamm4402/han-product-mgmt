@@ -68,6 +68,20 @@ class ProductServiceTests @Autowired constructor(
     }
 
     @Test
+    fun `import skips products with unseeded product types`() {
+        fakeFammeClient.products = listOf(
+            externalProduct(1),
+            externalProduct(2, productType = ""),
+            externalProduct(3, productType = "Unknown"),
+        )
+
+        val imported = productService.importProductsFromSource()
+
+        assertEquals(1, imported)
+        assertEquals(1, productService.listProducts().size)
+    }
+
+    @Test
     fun `create requires at least one variant`() {
         val form = ProductFormDto(
             title = "Manual product",
@@ -124,10 +138,11 @@ private fun externalProduct(
     id: Long,
     title: String = "Product $id",
     variantTitle: String = "Variant $id",
+    productType: String = "Shorts",
 ): ExternalProductDto = ExternalProductDto(
     id = id,
     title = title,
-    productType = "Shorts",
+    productType = productType,
     bodyHtml = "<p>Description</p>",
     createdAt = "2026-04-23T13:46:41+02:00",
     updatedAt = "2026-04-29T18:30:41+02:00",

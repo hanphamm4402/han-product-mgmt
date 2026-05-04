@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: jdbc:h2:mem:han_product_mgmt;MODE=PostgreSQL;DATABASE_TO_UPPER=false;DB_CLOSE_DELAY=-1
+    url: jdbc:h2:mem:han_product_mgmt;MODE=PostgreSQL;DATABASE_TO_LOWER=TRUE;DB_CLOSE_DELAY=-1
     username: sa
     password:
     driver-class-name: org.h2.Driver
@@ -11,7 +11,13 @@ spring:
     open-in-view: false
     hibernate:
       ddl-auto: validate
+    properties:
+      hibernate:
+        transaction:
+          jta:
+            platform: org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform
 
 app:
   integration:
     famme-base-url: http://localhost
+    famme-import-enabled: false

@@ -9,7 +9,7 @@ import org.springframework.web.client.RestClient
 @Component
 class FammeClient(
     restClientBuilder: RestClient.Builder,
-    @Value("\${app.integration.famme-base-url}") private val fammeBaseUrl: String,
+    @Value("\${app.integration.famme-base-url}") fammeBaseUrl: String,
 ) : FammeClientPort {
     private val restClient = restClientBuilder.baseUrl(fammeBaseUrl).build()
 

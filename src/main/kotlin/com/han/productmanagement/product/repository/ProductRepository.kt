@@ -15,6 +15,6 @@ interface ProductRepository : JpaRepository<ProductEntity, Long> {
     @Query("SELECT p FROM ProductEntity p WHERE p.id = :id")
     fun findWithDetailsById(@Param("id") id: Long): ProductEntity?
 
-    @Query(value = "SELECT NEXTVAL('PRODUCT_ID_SEQ')", nativeQuery = true)
+    @Query(value = "SELECT NEXTVAL('product_id_seq')", nativeQuery = true)
     fun nextId(): Long
 }

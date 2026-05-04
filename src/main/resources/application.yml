@@ -16,6 +16,9 @@ spring:
     properties:
       hibernate:
         format_sql: true
+        transaction:
+          jta:
+            platform: org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform
   thymeleaf:
     cache: false
     prefix: classpath:/templates/
