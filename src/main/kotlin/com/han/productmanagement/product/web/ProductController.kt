@@ -83,7 +83,7 @@ class ProductController(
 
         return runCatching { productService.saveProduct(product) }
             .fold(
-                onSuccess = { "redirect:/product/$it" },
+                onSuccess = { "redirect:/product" },
                 onFailure = {
                     bindingResult.reject("product.save", it.message ?: "Product could not be saved.")
                     addProductDetailModel(model, screenTitle, product)
