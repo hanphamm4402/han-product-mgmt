@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{fragments/layout :: layout(~{::section}, 'product-list')}">
-<section class="wa-stack wa-gap-l">
+<section id="product-list-content" class="wa-stack wa-gap-l" th:fragment="productListContent">
     <div class="wa-cluster wa-gap-s wa-align-items-center">
         <div class="wa-heading-xl">Product List</div>
         <wa-badge id="product-count-badge" variant="brand" th:text="${productCount}">0</wa-badge>
@@ -14,15 +14,18 @@
                   th:value="${searchQuery}"
                   hx-get="/product"
                   hx-trigger="input changed delay:300ms, search"
-                  hx-target="#product-results"
-                  hx-swap="outerHTML">
+                  hx-target="#product-list-content"
+                  hx-select="#product-list-content"
+                  hx-swap="outerHTML"
+                  hx-vals="js:{query: document.querySelector('#product-search').value}"
+                  hx-replace-url="true">
             <wa-icon slot="start" name="search"></wa-icon>
         </wa-input>
 
         <div class="wa-cluster wa-gap-s wa-justify-content-end">
             <wa-button variant="brand"
                        hx-post="/product/load"
-                       hx-target="#product-results"
+                       hx-target="#product-list-content"
                        hx-swap="outerHTML"
                        hx-on::after-request="document.querySelector('#product-search').value = ''">
                 <wa-icon slot="start" name="download"></wa-icon>

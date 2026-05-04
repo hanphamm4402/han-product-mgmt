@@ -2,12 +2,6 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <body>
 <div id="product-results" class="wa-stack wa-gap-m" th:fragment="productResults">
-    <wa-badge th:if="${isHtmxRequest}"
-              id="product-count-badge"
-              variant="brand"
-              th:text="${productCount}"
-              hx-swap-oob="outerHTML">0</wa-badge>
-
     <wa-callout th:if="${tableError}" variant="danger">
         <wa-icon slot="icon" name="circle-exclamation"></wa-icon>
         <span th:text="${tableError}">Products could not be loaded.</span>
@@ -51,7 +45,7 @@
                             <wa-button class="product-button-neutral" data-dialog="close" appearance="outlined">Cancel</wa-button>
                             <wa-button variant="danger"
                                        th:hx-delete="@{/product/{id}(id=${product.id})}"
-                                       hx-target="#product-results"
+                                       hx-target="#product-list-content"
                                        hx-swap="outerHTML"
                                        hx-include="#product-search">
                                 <wa-icon slot="start" name="trash"></wa-icon>

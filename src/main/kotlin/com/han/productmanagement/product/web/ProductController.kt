@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.ModelAttribute
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestHeader
 import org.springframework.web.bind.annotation.RequestParam
 
 @Controller
@@ -24,18 +23,11 @@ class ProductController(
     @GetMapping("/product")
     fun list(
         @RequestParam("query", required = false) query: String?,
-        @RequestHeader("HX-Request", required = false) htmxRequest: String?,
         model: Model,
     ): String {
         addProductListModel(model, query)
         model.addAttribute("searchQuery", query.orEmpty())
-        val isHtmxRequest = htmxRequest == "true"
-        model.addAttribute("isHtmxRequest", isHtmxRequest)
-        return if (isHtmxRequest) {
-            "fragments/product-table :: productResults"
-        } else {
-            "product-list"
-        }
+        return "product-list"
     }
 
     @PostMapping("/product/load")
@@ -43,8 +35,8 @@ class ProductController(
         runCatching { productService.importProductsFromSource() }
             .onFailure { model.addAttribute("tableError", "Products could not be loaded from Famme right now.") }
         addProductListModel(model)
-        model.addAttribute("isHtmxRequest", true)
-        return "fragments/product-table :: productResults"
+        model.addAttribute("searchQuery", "")
+        return "product-list :: productListContent"
     }
 
     @GetMapping("/product/{id}")
@@ -85,8 +77,8 @@ class ProductController(
     ): String {
         productService.deleteProduct(id)
         addProductListModel(model, query)
-        model.addAttribute("isHtmxRequest", true)
-        return "fragments/product-table :: productResults"
+        model.addAttribute("searchQuery", query.orEmpty())
+        return "product-list :: productListContent"
     }
 
     private fun save(
