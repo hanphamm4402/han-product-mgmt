@@ -10,6 +10,9 @@ function variantRows() {
 }
 
 function setName(element, index, field) {
+    if (!element) {
+        return;
+    }
     element.setAttribute("name", `variants[${index}].${field}`);
 }
 
