@@ -22,15 +22,25 @@ function renumberVariants() {
         setName(row.querySelector('[data-name="title"], wa-input[name$=".title"]'), index, "title");
         setName(row.querySelector('[data-name="sku"], wa-input[name$=".sku"]'), index, "sku");
         setName(row.querySelector('[data-name="availableHidden"], input[type="hidden"][name$=".available"]'), index, "available");
-        setName(row.querySelector('[data-name="available"], wa-checkbox[name$=".available"]'), index, "available");
         setName(row.querySelector('[data-name="price"], wa-input[name$=".price"]'), index, "price");
     });
+    syncAvailableFields();
     refreshVariantState();
+}
+
+function syncAvailableFields() {
+    variantRows().forEach((row) => {
+        const checkbox = row.querySelector('[data-name="available"]');
+        const hidden = row.querySelector('[data-name="availableHidden"]');
+        if (hidden && checkbox) {
+            hidden.value = checkbox.checked ? "true" : "false";
+        }
+    });
 }
 
 function refreshVariantState() {
     const rows = variantRows();
-    const available = rows.filter((row) => row.querySelector('wa-checkbox[name$=".available"]')?.checked).length;
+    const available = rows.filter((row) => row.querySelector('[data-name="available"]')?.checked).length;
     availableVariantCount.textContent = available.toString();
     if (rows.length > 0) {
         variantError.classList.add("product-callout-hidden");
@@ -52,12 +62,19 @@ variantsList.addEventListener("click", (event) => {
     renumberVariants();
 });
 
-variantsList.addEventListener("wa-change", refreshVariantState);
-variantsList.addEventListener("change", refreshVariantState);
+variantsList.addEventListener("wa-change", () => {
+    syncAvailableFields();
+    refreshVariantState();
+});
+variantsList.addEventListener("change", () => {
+    syncAvailableFields();
+    refreshVariantState();
+});
 addVariantButton.addEventListener("click", addVariant);
 
 productForm.addEventListener("submit", (event) => {
     renumberVariants();
+    syncAvailableFields();
     if (variantRows().length === 0) {
         event.preventDefault();
         variantError.classList.remove("product-callout-hidden");
