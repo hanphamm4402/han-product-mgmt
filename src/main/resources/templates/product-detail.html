@@ -77,7 +77,7 @@
                         <th>Variant title <span aria-hidden="true">*</span></th>
                         <th>SKU <span aria-hidden="true">*</span></th>
                         <th>Available</th>
-                        <th>Price</th>
+                        <th>Price <span aria-hidden="true">*</span></th>
                         <th>Action</th>
                     </tr>
                     </thead>
@@ -89,7 +89,8 @@
                                    th:id="|variants${stat.index}.id|"
                                    th:name="|variants[${stat.index}].id|"
                                    th:value="${variant.id}">
-                            <wa-input placeholder="Enter variant title"
+                            <wa-input aria-label="Variant title"
+                                      placeholder="Enter variant title"
                                       size="m"
                                       required
                                       data-name="title"
@@ -98,7 +99,8 @@
                                       th:value="${variant.title}"></wa-input>
                         </td>
                         <td>
-                            <wa-input placeholder="Enter SKU"
+                            <wa-input aria-label="SKU"
+                                      placeholder="Enter SKU"
                                       size="m"
                                       required
                                       data-name="sku"
@@ -114,7 +116,8 @@
                                          th:checked="${variant.available}"></wa-checkbox>
                         </td>
                         <td>
-                            <wa-input placeholder="Enter price"
+                            <wa-input aria-label="Price"
+                                      placeholder="Enter price"
                                       size="m"
                                       type="number"
                                       min="0"
@@ -147,17 +150,17 @@
         <tr class="product-variant-row">
             <td>
                 <input type="hidden" data-name="id">
-                <wa-input placeholder="Enter variant title" size="m" required data-name="title"></wa-input>
+                <wa-input aria-label="Variant title" placeholder="Enter variant title" size="m" required data-name="title"></wa-input>
             </td>
             <td>
-                <wa-input placeholder="Enter SKU" size="m" required data-name="sku"></wa-input>
+                <wa-input aria-label="SKU" placeholder="Enter SKU" size="m" required data-name="sku"></wa-input>
             </td>
             <td>
                 <input type="hidden" data-name="availableHidden" value="false">
                 <wa-checkbox value="true" checked data-name="available"></wa-checkbox>
             </td>
             <td>
-                <wa-input placeholder="Enter price" size="m" type="number" min="0" max="100000000" step="1" required data-name="price"></wa-input>
+                <wa-input aria-label="Price" placeholder="Enter price" size="m" type="number" min="0" max="100000000" step="1" required data-name="price"></wa-input>
             </td>
             <td>
                 <wa-button type="button" appearance="plain" size="s" class="delete-variant-button">

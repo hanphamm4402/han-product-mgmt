@@ -130,6 +130,10 @@ body {
     color: var(--product-color-text);
 }
 
+.product-variant-table wa-input::part(form-control-label) {
+    display: none;
+}
+
 .product-variant-table td:nth-child(3),
 .product-variant-table td:nth-child(5) {
     width: 1%;
