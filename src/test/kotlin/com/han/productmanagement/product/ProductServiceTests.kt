@@ -49,7 +49,7 @@ class ProductServiceTests @Autowired constructor(
 
         assertEquals(50, imported)
         assertEquals(50, products.size)
-        assertEquals(1, products.first().variantCount)
+        assertEquals("Shorts", products.first().productTypeName)
     }
 
     @Test

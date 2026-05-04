@@ -15,7 +15,7 @@
                 <th>Vendor</th>
                 <th>Created date</th>
                 <th>Updated date</th>
-                <th>Variants</th>
+                <th>Product type</th>
                 <th>Actions</th>
             </tr>
             </thead>
@@ -30,7 +30,7 @@
                 <td th:text="${product.vendor}">Vendor</td>
                 <td th:text="${#temporals.format(product.createdAt, 'MM/dd/yyyy')}">01/01/2026</td>
                 <td th:text="${#temporals.format(product.updatedAt, 'MM/dd/yyyy')}">01/01/2026</td>
-                <td th:text="${product.variantCount}">0</td>
+                <td th:text="${product.productTypeName}">Type</td>
                 <td>
                     <wa-button th:attr="data-dialog='open delete-product-dialog-' + ${product.id}"
                                appearance="plain"

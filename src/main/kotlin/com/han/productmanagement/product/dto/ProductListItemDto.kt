@@ -8,5 +8,5 @@ data class ProductListItemDto(
     val vendor: String,
     val createdAt: OffsetDateTime,
     val updatedAt: OffsetDateTime,
-    val variantCount: Int,
+    val productTypeName: String,
 )

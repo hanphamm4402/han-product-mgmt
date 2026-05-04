@@ -16,7 +16,7 @@ object ProductMapper {
         vendor = entity.vendor,
         createdAt = entity.createdAt,
         updatedAt = entity.updatedAt,
-        variantCount = entity.variants.size,
+        productTypeName = requireNotNull(entity.productType).name,
     )
 
     fun toForm(entity: ProductEntity): ProductFormDto = ProductFormDto(

@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.Query
 import org.springframework.data.repository.query.Param
 
 interface ProductRepository : JpaRepository<ProductEntity, Long> {
-    @EntityGraph(attributePaths = ["productType", "variants"])
+    @EntityGraph(attributePaths = ["productType"])
     @Query("SELECT DISTINCT p FROM ProductEntity p ORDER BY p.updatedAt DESC, p.id DESC")
     fun findAllWithDetails(): List<ProductEntity>
 
