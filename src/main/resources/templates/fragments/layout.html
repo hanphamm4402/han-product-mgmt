@@ -16,6 +16,7 @@
 <main class="app-content-main">
     <th:block th:replace="${content}"></th:block>
 </main>
+<script th:src="@{/assets/app/app.js}"></script>
 <script th:if="${pageScript != null}" th:src="@{'/assets/app/' + ${pageScript} + '.js'}"></script>
 </body>
 </html>
