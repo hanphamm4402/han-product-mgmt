@@ -1,26 +1,62 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <body>
-<th:block th:fragment="productTable(products)">
-    <table>
-        <thead>
-        <tr>
-            <th>ID</th>
-            <th>External ID</th>
-            <th>Name</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:if="${#lists.isEmpty(products)}">
-            <td colspan="3">No products loaded</td>
-        </tr>
-        <tr th:each="product : ${products}">
-            <td th:text="${product.id}">1</td>
-            <td th:text="${product.externalId}">ext-1</td>
-            <td th:text="${product.name}">Sample Product</td>
-        </tr>
-        </tbody>
-    </table>
-</th:block>
+<div id="product-table-wrap" class="wa-stack wa-gap-m" th:fragment="productTable">
+    <wa-callout th:if="${tableError}" variant="danger">
+        <wa-icon slot="icon" name="circle-exclamation"></wa-icon>
+        <span th:text="${tableError}">Products could not be loaded.</span>
+    </wa-callout>
+
+    <div class="product-table-shell">
+        <table class="product-table-main">
+            <thead>
+            <tr>
+                <th>Title</th>
+                <th>Vendor</th>
+                <th>Created date</th>
+                <th>Updated date</th>
+                <th>Variants</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:if="${#lists.isEmpty(products)}">
+                <td colspan="6">No products loaded.</td>
+            </tr>
+            <tr th:each="product : ${products}">
+                <td>
+                    <a th:href="@{/product/{id}(id=${product.id})}" th:text="${product.title}">Product</a>
+                </td>
+                <td th:text="${product.vendor}">Vendor</td>
+                <td th:text="${#temporals.format(product.createdAt, 'MM/dd/yyyy')}">01/01/2026</td>
+                <td th:text="${#temporals.format(product.updatedAt, 'MM/dd/yyyy')}">01/01/2026</td>
+                <td th:text="${product.variantCount}">0</td>
+                <td>
+                    <wa-button th:attr="data-dialog='open delete-product-dialog-' + ${product.id}"
+                               appearance="plain"
+                               size="small">
+                        <wa-icon class="product-icon-danger" name="trash" label="Delete product"></wa-icon>
+                    </wa-button>
+                    <wa-dialog th:id="'delete-product-dialog-' + ${product.id}"
+                               label="Delete product"
+                               light-dismiss>
+                        <p th:text="'Delete ' + ${product.title} + '?'">Delete product?</p>
+                        <div slot="footer" class="wa-cluster wa-gap-s wa-justify-content-end">
+                            <wa-button data-dialog="close">Cancel</wa-button>
+                            <wa-button variant="danger"
+                                       th:hx-delete="@{/product/{id}(id=${product.id})}"
+                                       hx-target="#product-table-wrap"
+                                       hx-swap="outerHTML">
+                                <wa-icon slot="start" name="trash"></wa-icon>
+                                Delete
+                            </wa-button>
+                        </div>
+                    </wa-dialog>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
 </body>
 </html>

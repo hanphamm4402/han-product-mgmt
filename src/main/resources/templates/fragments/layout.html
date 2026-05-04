@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:fragment="layout(content, pageScript)">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Han Product Management</title>
+    <link rel="stylesheet" href="https://early.webawesome.com/webawesome@3.0.0-alpha.13/dist/styles/webawesome.css">
+    <link rel="stylesheet" th:href="@{/assets/app/app.css}">
+    <script src="https://unpkg.com/htmx.org@1.9.12"></script>
+    <script type="module" src="https://early.webawesome.com/webawesome@3.0.0-alpha.13/dist/webawesome.loader.js"></script>
+</head>
+<body>
+<header class="app-header-main">
+    <div class="app-header-inner wa-split wa-gap-m wa-align-items-center">
+        <a class="app-header-brand" th:href="@{/product}">Han Product Management</a>
+    </div>
+</header>
+<main class="app-content-main">
+    <th:block th:replace="${content}"></th:block>
+</main>
+<script th:if="${pageScript != null}" th:src="@{'/assets/app/' + ${pageScript} + '.js'}"></script>
+</body>
+</html>

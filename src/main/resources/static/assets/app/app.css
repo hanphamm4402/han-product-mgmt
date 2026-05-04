@@ -1,0 +1,93 @@
+:root {
+    color-scheme: light;
+}
+
+body {
+    margin: 0;
+    background: var(--wa-color-surface-default);
+    color: var(--wa-color-text-normal);
+    font-family: var(--wa-font-family-body);
+}
+
+.app-header-main {
+    position: fixed;
+    inset: 0 0 auto 0;
+    z-index: 10;
+    background: var(--wa-color-surface-raised);
+    border-bottom: 1px solid var(--wa-color-surface-border);
+    box-shadow: var(--wa-shadow-xs);
+}
+
+.app-header-inner {
+    min-height: 4rem;
+    max-width: 72rem;
+    margin: 0 auto;
+    padding: 0 var(--wa-space-l);
+}
+
+.app-header-brand {
+    color: var(--wa-color-text-normal);
+    font-size: var(--wa-font-size-l);
+    font-weight: var(--wa-font-weight-semibold);
+    text-decoration: none;
+}
+
+.app-content-main {
+    max-width: 72rem;
+    margin: 0 auto;
+    padding: calc(4rem + var(--wa-space-xl)) var(--wa-space-l) var(--wa-space-xl);
+}
+
+.product-table-shell {
+    overflow-x: auto;
+    border: 1px solid var(--wa-color-surface-border);
+    border-radius: var(--wa-border-radius-s);
+    background: var(--wa-color-surface-raised);
+}
+
+.product-table-main {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.product-table-main th,
+.product-table-main td {
+    padding: var(--wa-space-s) var(--wa-space-m);
+    text-align: left;
+    border-bottom: 1px solid var(--wa-color-surface-border);
+    vertical-align: middle;
+}
+
+.product-table-main th {
+    font-size: var(--wa-font-size-s);
+    font-weight: var(--wa-font-weight-semibold);
+    color: var(--wa-color-text-quiet);
+}
+
+.product-table-main tr:last-child td {
+    border-bottom: 0;
+}
+
+.product-form-fields {
+    align-items: end;
+}
+
+.product-variant-row {
+    padding: var(--wa-space-m);
+    border: 1px solid var(--wa-color-surface-border);
+    border-radius: var(--wa-border-radius-s);
+}
+
+.product-icon-danger {
+    color: var(--wa-color-danger-fill-loud);
+}
+
+.product-callout-hidden {
+    display: none;
+}
+
+@media (max-width: 44rem) {
+    .app-content-main {
+        padding-inline: var(--wa-space-m);
+    }
+}

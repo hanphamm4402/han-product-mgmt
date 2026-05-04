@@ -1,0 +1,20 @@
+services:
+  postgres:
+    image: postgres:16
+    container_name: han-product-mgmt-postgres
+    environment:
+      POSTGRES_DB: han_product_mgmt
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - han-product-mgmt-postgres:/var/lib/postgresql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d han_product_mgmt"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  han-product-mgmt-postgres:
