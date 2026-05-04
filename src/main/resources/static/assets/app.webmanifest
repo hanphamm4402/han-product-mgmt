@@ -1,0 +1,9 @@
+{
+  "name": "Han Product Management",
+  "short_name": "Products",
+  "start_url": "/product",
+  "display": "standalone",
+  "background_color": "#FAF8EF",
+  "theme_color": "#407F3E",
+  "icons": []
+}
