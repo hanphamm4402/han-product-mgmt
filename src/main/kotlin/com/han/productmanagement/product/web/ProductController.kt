@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.ModelAttribute
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
+import org.springframework.web.bind.annotation.RequestParam
 
 @Controller
 class ProductController(
@@ -25,12 +26,18 @@ class ProductController(
         return "product-list"
     }
 
+    @GetMapping("/product/table")
+    fun table(@RequestParam("q", required = false) query: String?, model: Model): String {
+        addProductListModel(model, query)
+        return "fragments/product-table :: productResults"
+    }
+
     @PostMapping("/product/load")
     fun loadProducts(model: Model): String {
         runCatching { productService.importProductsFromSource() }
             .onFailure { model.addAttribute("tableError", "Products could not be loaded from Famme right now.") }
         addProductListModel(model)
-        return "fragments/product-table :: productTable"
+        return "fragments/product-table :: productResults"
     }
 
     @GetMapping("/product/{id}")
@@ -64,10 +71,14 @@ class ProductController(
     }
 
     @DeleteMapping("/product/{id}")
-    fun delete(@PathVariable id: Long, model: Model): String {
+    fun delete(
+        @PathVariable id: Long,
+        @RequestParam("q", required = false) query: String?,
+        model: Model,
+    ): String {
         productService.deleteProduct(id)
-        addProductListModel(model)
-        return "fragments/product-table :: productTable"
+        addProductListModel(model, query)
+        return "fragments/product-table :: productResults"
     }
 
     private fun save(
@@ -92,8 +103,8 @@ class ProductController(
             )
     }
 
-    private fun addProductListModel(model: Model) {
-        val products = productService.listProducts()
+    private fun addProductListModel(model: Model, query: String? = null) {
+        val products = productService.listProductsByTitle(query)
         model.addAttribute("products", products)
         model.addAttribute("productCount", products.size)
     }

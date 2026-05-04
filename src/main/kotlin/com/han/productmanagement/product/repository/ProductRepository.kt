@@ -11,6 +11,9 @@ interface ProductRepository : JpaRepository<ProductEntity, Long> {
     @Query("SELECT DISTINCT p FROM ProductEntity p ORDER BY p.updatedAt DESC, p.id DESC")
     fun findAllWithDetails(): List<ProductEntity>
 
+    @EntityGraph(attributePaths = ["productType"])
+    fun findByTitleContainingIgnoreCaseOrderByUpdatedAtDescIdDesc(title: String): List<ProductEntity>
+
     @EntityGraph(attributePaths = ["productType", "variants"])
     @Query("SELECT p FROM ProductEntity p WHERE p.id = :id")
     fun findWithDetailsById(@Param("id") id: Long): ProductEntity?

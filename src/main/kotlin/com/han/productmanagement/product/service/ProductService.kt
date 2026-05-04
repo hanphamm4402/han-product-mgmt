@@ -32,6 +32,17 @@ class ProductService(
         productRepository.findAllWithDetails().map(ProductMapper::toListItem)
 
     @Transactional(readOnly = true)
+    fun listProductsByTitle(query: String?): List<ProductListItemDto> {
+        val title = query?.trim().orEmpty()
+        val products = if (title.isBlank()) {
+            productRepository.findAllWithDetails()
+        } else {
+            productRepository.findByTitleContainingIgnoreCaseOrderByUpdatedAtDescIdDesc(title)
+        }
+        return products.map(ProductMapper::toListItem)
+    }
+
+    @Transactional(readOnly = true)
     fun listProductTypes(): List<ProductTypeDto> =
         productTypeRepository.findAll().sortedBy { it.name }.map(ProductMapper::toTypeDto)
 

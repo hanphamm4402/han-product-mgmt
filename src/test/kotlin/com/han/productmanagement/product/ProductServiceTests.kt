@@ -92,6 +92,36 @@ class ProductServiceTests @Autowired constructor(
     }
 
     @Test
+    fun `list products by title filters case-insensitively`() {
+        productService.saveProduct(
+            ProductFormDto(
+                title = "Classic Shorts",
+                productTypeId = 1,
+                vendor = "Manual vendor",
+                variants = mutableListOf(
+                    VariantFormDto(title = "Default", sku = "SHORTS-1", price = BigDecimal("10")),
+                ),
+            ),
+        )
+        productService.saveProduct(
+            ProductFormDto(
+                title = "Training Leggings",
+                productTypeId = 2,
+                vendor = "Manual vendor",
+                variants = mutableListOf(
+                    VariantFormDto(title = "Default", sku = "LEGGINGS-1", price = BigDecimal("20")),
+                ),
+            ),
+        )
+
+        val filtered = productService.listProductsByTitle("short")
+
+        assertEquals(1, filtered.size)
+        assertEquals("Classic Shorts", filtered.single().title)
+        assertEquals(2, productService.listProductsByTitle(" ").size)
+    }
+
+    @Test
     fun `create requires at least one variant`() {
         val form = ProductFormDto(
             title = "Manual product",
