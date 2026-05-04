@@ -42,7 +42,7 @@
                                light-dismiss>
                         <p th:text="'Delete ' + ${product.title} + '?'">Delete product?</p>
                         <div slot="footer" class="wa-cluster wa-gap-s wa-justify-content-end">
-                            <wa-button data-dialog="close">Cancel</wa-button>
+                            <wa-button class="product-button-neutral" data-dialog="close" appearance="outlined">Cancel</wa-button>
                             <wa-button variant="danger"
                                        th:hx-delete="@{/product/{id}(id=${product.id})}"
                                        hx-target="#product-table-wrap"

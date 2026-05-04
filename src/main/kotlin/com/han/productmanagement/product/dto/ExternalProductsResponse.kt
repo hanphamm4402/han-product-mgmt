@@ -1,7 +1,7 @@
 package com.han.productmanagement.product.dto
 
-import tools.jackson.annotation.JsonIgnoreProperties
-import tools.jackson.annotation.JsonProperty
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
+import com.fasterxml.jackson.annotation.JsonProperty
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 data class ExternalProductsResponse(

@@ -1,11 +1,37 @@
 :root {
     color-scheme: light;
+    --product-color-green-700: #407F3E;
+    --product-color-green-600: #366B35;
+    --product-color-green-100: #E8F2E7;
+    --product-color-lime-500: #89B449;
+    --product-color-lime-600: #789F3F;
+    --product-color-lime-100: #F0F7E8;
+    --product-color-yellow-500: #DBD468;
+    --product-color-yellow-600: #C7BF4F;
+    --product-color-yellow-100: #FBF8D7;
+    --product-color-cream-300: #E7E0C4;
+    --product-color-cream-200: #F2EEDC;
+    --product-color-cream-100: #FAF8EF;
+    --product-color-cream-border: #D8D0B2;
+    --product-color-rose-500: #E6848C;
+    --product-color-rose-600: #D96C76;
+    --product-color-rose-100: #FCECEF;
+    --product-color-text: #1F2A1F;
+    --product-color-text-muted: #5E665A;
+    --wa-color-brand-fill-loud: var(--product-color-green-700);
+    --wa-color-brand-fill-loud-hover: var(--product-color-green-600);
+    --wa-color-success-fill-normal: var(--product-color-green-100);
+    --wa-color-success-on-normal: #2E5E2D;
+    --wa-color-danger-fill-loud: var(--product-color-rose-500);
+    --wa-color-danger-fill-loud-hover: var(--product-color-rose-600);
+    --wa-color-danger-fill-normal: var(--product-color-rose-100);
+    --wa-color-danger-on-normal: #A9444C;
 }
 
 body {
     margin: 0;
-    background: var(--wa-color-surface-default);
-    color: var(--wa-color-text-normal);
+    background: var(--product-color-cream-100);
+    color: var(--product-color-text);
     font-family: var(--wa-font-family-body);
 }
 
@@ -13,8 +39,8 @@ body {
     position: fixed;
     inset: 0 0 auto 0;
     z-index: 10;
-    background: var(--wa-color-surface-raised);
-    border-bottom: 1px solid var(--wa-color-surface-border);
+    background: var(--product-color-green-700);
+    border-bottom: 1px solid var(--product-color-green-600);
     box-shadow: var(--wa-shadow-xs);
 }
 
@@ -26,10 +52,18 @@ body {
 }
 
 .app-header-brand {
-    color: var(--wa-color-text-normal);
+    color: white;
     font-size: var(--wa-font-size-l);
     font-weight: var(--wa-font-weight-semibold);
     text-decoration: none;
+}
+
+.app-content-main a {
+    color: var(--product-color-green-700);
+}
+
+.app-content-main a:hover {
+    color: var(--product-color-green-600);
 }
 
 .app-content-main {
@@ -40,9 +74,9 @@ body {
 
 .product-table-shell {
     overflow-x: auto;
-    border: 1px solid var(--wa-color-surface-border);
+    border: 1px solid var(--product-color-cream-border);
     border-radius: var(--wa-border-radius-s);
-    background: var(--wa-color-surface-raised);
+    background: white;
 }
 
 .product-table-main {
@@ -54,14 +88,15 @@ body {
 .product-table-main td {
     padding: var(--wa-space-s) var(--wa-space-m);
     text-align: left;
-    border-bottom: 1px solid var(--wa-color-surface-border);
+    border-bottom: 1px solid var(--product-color-cream-border);
     vertical-align: middle;
 }
 
 .product-table-main th {
+    background: var(--product-color-cream-300);
     font-size: var(--wa-font-size-s);
     font-weight: var(--wa-font-weight-semibold);
-    color: var(--wa-color-text-quiet);
+    color: var(--product-color-text);
 }
 
 .product-table-main tr:last-child td {
@@ -74,12 +109,39 @@ body {
 
 .product-variant-row {
     padding: var(--wa-space-m);
-    border: 1px solid var(--wa-color-surface-border);
+    border: 1px solid var(--product-color-cream-border);
     border-radius: var(--wa-border-radius-s);
+    background: white;
 }
 
 .product-icon-danger {
-    color: var(--wa-color-danger-fill-loud);
+    color: var(--product-color-rose-500);
+}
+
+wa-button:hover .product-icon-danger {
+    color: var(--product-color-rose-600);
+}
+
+.product-button-positive::part(base) {
+    background: var(--product-color-lime-500);
+    border-color: var(--product-color-lime-500);
+    color: white;
+}
+
+.product-button-positive::part(base):hover {
+    background: var(--product-color-lime-600);
+    border-color: var(--product-color-lime-600);
+}
+
+.product-button-neutral::part(base) {
+    background: transparent;
+    border-color: var(--product-color-cream-border);
+    color: var(--product-color-text);
+}
+
+.product-button-neutral::part(base):hover {
+    background: var(--product-color-cream-200);
+    border-color: var(--product-color-cream-border);
 }
 
 .product-callout-hidden {
