@@ -28,19 +28,26 @@ function renumberVariants() {
     refreshVariantState();
 }
 
-function syncAvailableFields() {
+function isAvailableChecked(checkbox, useAttributeFallback = false) {
+    if (!checkbox) {
+        return false;
+    }
+    return checkbox.checked || (useAttributeFallback && checkbox.hasAttribute("checked"));
+}
+
+function syncAvailableFields(useAttributeFallback = false) {
     variantRows().forEach((row) => {
         const checkbox = row.querySelector('[data-name="available"]');
         const hidden = row.querySelector('[data-name="availableHidden"]');
         if (hidden && checkbox) {
-            hidden.value = checkbox.checked ? "true" : "false";
+            hidden.value = isAvailableChecked(checkbox, useAttributeFallback) ? "true" : "false";
         }
     });
 }
 
-function refreshVariantState() {
+function refreshVariantState(useAttributeFallback = false) {
     const rows = variantRows();
-    const available = rows.filter((row) => row.querySelector('[data-name="available"]')?.checked).length;
+    const available = rows.filter((row) => isAvailableChecked(row.querySelector('[data-name="available"]'), useAttributeFallback)).length;
     availableVariantCount.textContent = available.toString();
     if (rows.length > 0) {
         variantError.classList.add("product-callout-hidden");
@@ -82,3 +89,9 @@ productForm.addEventListener("submit", (event) => {
 });
 
 renumberVariants();
+syncAvailableFields(true);
+refreshVariantState(true);
+customElements.whenDefined("wa-checkbox").then(() => {
+    syncAvailableFields();
+    refreshVariantState();
+});
