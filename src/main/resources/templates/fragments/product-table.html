@@ -2,26 +2,12 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <body>
 <div id="product-results" class="wa-stack wa-gap-m" th:fragment="productResults">
-    <div class="wa-split wa-gap-m wa-align-items-center">
-        <div class="wa-cluster wa-gap-s wa-align-items-center">
-            <div class="wa-heading-xl">Product List</div>
-            <wa-badge id="product-count-badge" variant="brand" th:text="${productCount}">0</wa-badge>
-        </div>
-        <div class="wa-cluster wa-gap-s wa-justify-content-end">
-            <wa-button variant="brand"
-                       hx-post="/product/load"
-                       hx-target="#product-results"
-                       hx-swap="outerHTML"
-                       hx-on::after-request="document.querySelector('#product-search').value = ''">
-                <wa-icon slot="start" name="download"></wa-icon>
-                Load products
-            </wa-button>
-            <wa-button class="product-button-positive" href="/new-product">
-                <wa-icon slot="start" name="plus"></wa-icon>
-                New product
-            </wa-button>
-        </div>
-    </div>
+    <template>
+        <wa-badge id="product-count-badge"
+                  variant="brand"
+                  th:text="${productCount}"
+                  hx-swap-oob="outerHTML">0</wa-badge>
+    </template>
 
     <wa-callout th:if="${tableError}" variant="danger">
         <wa-icon slot="icon" name="circle-exclamation"></wa-icon>

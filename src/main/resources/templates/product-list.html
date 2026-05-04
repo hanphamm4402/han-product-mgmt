@@ -1,17 +1,38 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{fragments/layout :: layout(~{::section}, 'product-list')}">
 <section class="wa-stack wa-gap-l">
-    <wa-input id="product-search"
-              name="q"
-              label="Search products"
-              placeholder="Search by title"
-              size="medium"
-              hx-get="/product/table"
-              hx-trigger="input changed delay:300ms, search"
-              hx-target="#product-results"
-              hx-swap="outerHTML">
-        <wa-icon slot="start" name="search"></wa-icon>
-    </wa-input>
+    <div class="wa-cluster wa-gap-s wa-align-items-center">
+        <div class="wa-heading-xl">Product List</div>
+        <wa-badge id="product-count-badge" variant="brand" th:text="${productCount}">0</wa-badge>
+    </div>
+
+    <div class="wa-split wa-gap-m wa-align-items-end">
+        <wa-input id="product-search"
+                  name="q"
+                  placeholder="Search by title"
+                  size="medium"
+                  hx-get="/product/table"
+                  hx-trigger="input changed delay:300ms, search"
+                  hx-target="#product-results"
+                  hx-swap="outerHTML">
+            <wa-icon slot="start" name="search"></wa-icon>
+        </wa-input>
+
+        <div class="wa-cluster wa-gap-s wa-justify-content-end">
+            <wa-button variant="brand"
+                       hx-post="/product/load"
+                       hx-target="#product-results"
+                       hx-swap="outerHTML"
+                       hx-on::after-request="document.querySelector('#product-search').value = ''">
+                <wa-icon slot="start" name="download"></wa-icon>
+                Load products
+            </wa-button>
+            <wa-button class="product-button-positive" href="/new-product">
+                <wa-icon slot="start" name="plus"></wa-icon>
+                New product
+            </wa-button>
+        </div>
+    </div>
 
     <th:block th:replace="~{fragments/product-table :: productResults}"></th:block>
 </section>
