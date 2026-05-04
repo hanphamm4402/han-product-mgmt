@@ -35,8 +35,7 @@ class ProductController(
         runCatching { productService.importProductsFromSource() }
             .onFailure { model.addAttribute("tableError", "Products could not be loaded from Famme right now.") }
         addProductListModel(model)
-        model.addAttribute("searchQuery", "")
-        return "product-list :: productListContent"
+        return "fragments/product-table :: productResults"
     }
 
     @GetMapping("/product/{id}")
@@ -77,8 +76,7 @@ class ProductController(
     ): String {
         productService.deleteProduct(id)
         addProductListModel(model, query)
-        model.addAttribute("searchQuery", query.orEmpty())
-        return "product-list :: productListContent"
+        return "fragments/product-table :: productResults"
     }
 
     private fun save(

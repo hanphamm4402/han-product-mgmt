@@ -45,7 +45,7 @@
                             <wa-button class="product-button-neutral" data-dialog="close" appearance="outlined">Cancel</wa-button>
                             <wa-button variant="danger"
                                        th:hx-delete="@{/product/{id}(id=${product.id})}"
-                                       hx-target="#product-list-content"
+                                       hx-target="#product-results"
                                        hx-swap="outerHTML"
                                        hx-include="#product-search">
                                 <wa-icon slot="start" name="trash"></wa-icon>
