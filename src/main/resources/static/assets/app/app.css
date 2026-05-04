@@ -107,11 +107,34 @@ body {
     align-items: end;
 }
 
-.product-variant-row {
-    padding: var(--wa-space-m);
-    border: 1px solid var(--product-color-cream-border);
-    border-radius: var(--wa-border-radius-s);
-    background: white;
+.product-variant-table-wrap {
+    overflow-x: auto;
+}
+
+.product-variant-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0 var(--wa-space-s);
+}
+
+.product-variant-table th,
+.product-variant-table td {
+    padding: 0 var(--wa-space-xs);
+    text-align: left;
+    vertical-align: middle;
+}
+
+.product-variant-table th {
+    font-size: var(--wa-font-size-s);
+    font-weight: var(--wa-font-weight-semibold);
+    color: var(--product-color-text);
+}
+
+.product-variant-table td:nth-child(3),
+.product-variant-table td:nth-child(5) {
+    width: 1%;
+    white-space: nowrap;
+    text-align: center;
 }
 
 .product-icon-danger {

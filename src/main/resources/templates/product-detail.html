@@ -70,52 +70,70 @@
                 <wa-icon slot="icon" name="circle-exclamation"></wa-icon>
                 Add at least one variant before saving.
             </wa-callout>
-            <div id="variants-list" class="wa-stack wa-gap-m">
-                <div class="product-variant-row wa-grid wa-gap-s wa-align-items-end"
-                     style="--min-column-size: 11rem;"
-                     th:each="variant, stat : *{variants}">
-                    <input type="hidden"
-                           data-name="id"
-                           th:id="|variants${stat.index}.id|"
-                           th:name="|variants[${stat.index}].id|"
-                           th:value="${variant.id}">
-                    <wa-input label="Variant title"
-                              placeholder="Enter variant title"
-                              size="m"
-                              required
-                              data-name="title"
-                              th:id="|variants${stat.index}.title|"
-                              th:name="|variants[${stat.index}].title|"
-                              th:value="${variant.title}"></wa-input>
-                    <wa-input label="SKU"
-                              placeholder="Enter SKU"
-                              size="m"
-                              required
-                              data-name="sku"
-                              th:id="|variants${stat.index}.sku|"
-                              th:name="|variants[${stat.index}].sku|"
-                              th:value="${variant.sku}"></wa-input>
-                    <input type="hidden" data-name="availableHidden" th:name="|variants[${stat.index}].available|" value="false">
-                    <wa-checkbox value="true"
-                                 data-name="available"
-                                 th:id="|variants${stat.index}.available|"
-                                 th:checked="${variant.available}">Available</wa-checkbox>
-                    <wa-input label="Price"
-                              placeholder="Enter price"
-                              size="m"
-                              type="number"
-                              min="0"
-                              max="100000000"
-                              step="1"
-                              required
-                              data-name="price"
-                              th:id="|variants${stat.index}.price|"
-                              th:name="|variants[${stat.index}].price|"
-                              th:value="${variant.price}"></wa-input>
-                    <wa-button type="button" appearance="plain" size="s" class="delete-variant-button">
-                        <wa-icon class="product-icon-danger" name="trash" label="Delete variant"></wa-icon>
-                    </wa-button>
-                </div>
+            <div class="product-variant-table-wrap">
+                <table class="product-variant-table">
+                    <thead>
+                    <tr>
+                        <th>Variant title <span aria-hidden="true">*</span></th>
+                        <th>SKU <span aria-hidden="true">*</span></th>
+                        <th>Available</th>
+                        <th>Price</th>
+                        <th>Action</th>
+                    </tr>
+                    </thead>
+                    <tbody id="variants-list">
+                    <tr class="product-variant-row" th:each="variant, stat : *{variants}">
+                        <td>
+                            <input type="hidden"
+                                   data-name="id"
+                                   th:id="|variants${stat.index}.id|"
+                                   th:name="|variants[${stat.index}].id|"
+                                   th:value="${variant.id}">
+                            <wa-input placeholder="Enter variant title"
+                                      size="m"
+                                      required
+                                      data-name="title"
+                                      th:id="|variants${stat.index}.title|"
+                                      th:name="|variants[${stat.index}].title|"
+                                      th:value="${variant.title}"></wa-input>
+                        </td>
+                        <td>
+                            <wa-input placeholder="Enter SKU"
+                                      size="m"
+                                      required
+                                      data-name="sku"
+                                      th:id="|variants${stat.index}.sku|"
+                                      th:name="|variants[${stat.index}].sku|"
+                                      th:value="${variant.sku}"></wa-input>
+                        </td>
+                        <td>
+                            <input type="hidden" data-name="availableHidden" th:name="|variants[${stat.index}].available|" value="false">
+                            <wa-checkbox value="true"
+                                         data-name="available"
+                                         th:id="|variants${stat.index}.available|"
+                                         th:checked="${variant.available}"></wa-checkbox>
+                        </td>
+                        <td>
+                            <wa-input placeholder="Enter price"
+                                      size="m"
+                                      type="number"
+                                      min="0"
+                                      max="100000000"
+                                      step="1"
+                                      required
+                                      data-name="price"
+                                      th:id="|variants${stat.index}.price|"
+                                      th:name="|variants[${stat.index}].price|"
+                                      th:value="${variant.price}"></wa-input>
+                        </td>
+                        <td>
+                            <wa-button type="button" appearance="plain" size="s" class="delete-variant-button">
+                                <wa-icon class="product-icon-danger" name="trash" label="Delete variant"></wa-icon>
+                            </wa-button>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
             </div>
         </wa-card>
 
@@ -126,17 +144,27 @@
     </form>
 
     <template id="variant-template">
-        <div class="product-variant-row wa-grid wa-gap-s wa-align-items-end" style="--min-column-size: 11rem;">
-            <input type="hidden" data-name="id">
-            <wa-input label="Variant title" placeholder="Enter variant title" size="m" required data-name="title"></wa-input>
-            <wa-input label="SKU" placeholder="Enter SKU" size="m" required data-name="sku"></wa-input>
-            <input type="hidden" data-name="availableHidden" value="false">
-            <wa-checkbox value="true" checked data-name="available">Available</wa-checkbox>
-            <wa-input label="Price" placeholder="Enter price" size="m" type="number" min="0" max="100000000" step="1" required data-name="price"></wa-input>
-            <wa-button type="button" appearance="plain" size="s" class="delete-variant-button">
-                <wa-icon class="product-icon-danger" name="trash" label="Delete variant"></wa-icon>
-            </wa-button>
-        </div>
+        <tr class="product-variant-row">
+            <td>
+                <input type="hidden" data-name="id">
+                <wa-input placeholder="Enter variant title" size="m" required data-name="title"></wa-input>
+            </td>
+            <td>
+                <wa-input placeholder="Enter SKU" size="m" required data-name="sku"></wa-input>
+            </td>
+            <td>
+                <input type="hidden" data-name="availableHidden" value="false">
+                <wa-checkbox value="true" checked data-name="available"></wa-checkbox>
+            </td>
+            <td>
+                <wa-input placeholder="Enter price" size="m" type="number" min="0" max="100000000" step="1" required data-name="price"></wa-input>
+            </td>
+            <td>
+                <wa-button type="button" appearance="plain" size="s" class="delete-variant-button">
+                    <wa-icon class="product-icon-danger" name="trash" label="Delete variant"></wa-icon>
+                </wa-button>
+            </td>
+        </tr>
     </template>
 </section>
 </html>
