@@ -4,6 +4,7 @@
 <div id="product-results" class="wa-stack wa-gap-m" th:fragment="productResults">
     <wa-callout th:if="${tableError}" variant="danger">
         <wa-icon slot="icon" name="circle-exclamation"></wa-icon>
+        <strong>Request failed</strong><br />
         <span th:text="${tableError}">Products could not be loaded.</span>
     </wa-callout>
 

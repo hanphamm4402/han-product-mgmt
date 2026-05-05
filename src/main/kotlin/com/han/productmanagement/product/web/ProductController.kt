@@ -32,8 +32,11 @@ class ProductController(
 
     @PostMapping("/product/load")
     fun loadProducts(model: Model): String {
-        runCatching { productService.importProductsFromSource() }
-            .onFailure { model.addAttribute("tableError", "Products could not be loaded from Famme right now.") }
+        try {
+            productService.importProductsFromSource()
+        } catch (_: Exception) {
+            model.addAttribute("tableError", "Products could not be loaded from Famme right now.")
+        }
         addProductListModel(model)
         return "fragments/product-table :: productResults"
     }
@@ -74,7 +77,11 @@ class ProductController(
         @RequestParam("query", required = false) query: String?,
         model: Model,
     ): String {
-        productService.deleteProductById(id)
+        try {
+            productService.deleteProductById(id)
+        } catch (_: Exception) {
+            model.addAttribute("tableError", "Product could not be deleted right now.")
+        }
         addProductListModel(model, query)
         return "fragments/product-table :: productResults"
     }
@@ -90,15 +97,14 @@ class ProductController(
             return "product-detail"
         }
 
-        return runCatching { productService.saveProduct(product) }
-            .fold(
-                onSuccess = { "redirect:/product" },
-                onFailure = {
-                    bindingResult.reject("product.save", it.message ?: "Product could not be saved.")
-                    addProductDetailModel(model, screenTitle, product)
-                    "product-detail"
-                },
-            )
+        return try {
+            productService.saveProduct(product)
+            "redirect:/product"
+        } catch (exception: Exception) {
+            bindingResult.reject("product.save", exception.message ?: "Product could not be saved.")
+            addProductDetailModel(model, screenTitle, product)
+            "product-detail"
+        }
     }
 
     private fun addProductListModel(model: Model, query: String? = null) {

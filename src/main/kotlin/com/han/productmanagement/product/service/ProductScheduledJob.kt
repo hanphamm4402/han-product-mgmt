@@ -14,8 +14,11 @@ class ProductScheduledJob(
 
     @Scheduled(initialDelay = 0, fixedDelay = Long.MAX_VALUE)
     fun loadProducts() {
-        runCatching { productService.importProductsFromSource() }
-            .onSuccess { logger.info("Imported {} products from Famme.", it) }
-            .onFailure { logger.warn("Product import failed: {}", it.message) }
+        try {
+            val importedProducts = productService.importProductsFromSource()
+            logger.info("Imported {} products from Famme.", importedProducts)
+        } catch (exception: Exception) {
+            logger.warn("Product import failed: {}", exception.message)
+        }
     }
 }
