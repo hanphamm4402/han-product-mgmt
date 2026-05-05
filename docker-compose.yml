@@ -13,7 +13,7 @@ services:
       - "5432:5432"
 
     volumes:
-      - postgres_data:/var/lib/postgresql
+      - han-product-mgmt-postgres:/var/lib/postgresql
 
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U postgres -d han_product_mgmt"]
@@ -22,4 +22,4 @@ services:
       retries: 20
 
 volumes:
-  postgres_data:
+  han-product-mgmt-postgres:
