@@ -1,5 +1,16 @@
 :root {
     color-scheme: light;
+    --wa-font-family-body: ui-sans-serif, system-ui, sans-serif;
+    --wa-font-size-s: 0.875rem;
+    --wa-font-size-l: 1.25rem;
+    --wa-font-weight-semibold: 500;
+    --wa-space-xs: 0.5rem;
+    --wa-space-s: 0.75rem;
+    --wa-space-m: 1rem;
+    --wa-space-l: 1.5rem;
+    --wa-space-xl: 2rem;
+    --wa-border-radius-s: 0.1875rem;
+    --wa-shadow-xs: 0 1px 2px rgb(0 0 0 / 0.08);
     --product-color-green-700: #407F3E;
     --product-color-green-600: #366B35;
     --product-color-green-100: #E8F2E7;
@@ -109,6 +120,8 @@ body {
 
 .product-variant-table-wrap {
     overflow-x: auto;
+    max-height: 28rem;
+    overflow-y: auto;
 }
 
 .product-variant-table {
@@ -125,6 +138,10 @@ body {
 }
 
 .product-variant-table th {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    background: #ffffff;
     font-size: var(--wa-font-size-s);
     font-weight: var(--wa-font-weight-semibold);
     color: var(--product-color-text);
