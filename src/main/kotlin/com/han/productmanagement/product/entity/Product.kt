@@ -1,4 +1,4 @@
-package com.han.productmanagement.product.domain
+package com.han.productmanagement.product.entity
 
 import jakarta.persistence.CascadeType
 import jakarta.persistence.Column
@@ -13,7 +13,7 @@ import java.time.OffsetDateTime
 
 @Entity
 @Table(name = "PRODUCT")
-class ProductEntity(
+class Product(
     @Id
     @Column(name = "ID")
     var id: Long? = null,
@@ -23,7 +23,7 @@ class ProductEntity(
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "PRODUCT_TYPE_ID", nullable = false)
-    var productType: ProductTypeEntity? = null,
+    var productType: ProductType? = null,
 
     @Column(name = "BODY_HTML", columnDefinition = "TEXT")
     var bodyHtml: String? = null,
@@ -38,14 +38,14 @@ class ProductEntity(
     var vendor: String = "",
 
     @OneToMany(mappedBy = "product", cascade = [CascadeType.ALL], orphanRemoval = true)
-    var variants: MutableList<VariantEntity> = mutableListOf(),
+    var variants: MutableList<Variant> = mutableListOf(),
 ) {
-    fun replaceVariants(newVariants: List<VariantEntity>) {
+    fun replaceVariants(newVariants: List<Variant>) {
         variants.clear()
         newVariants.forEach { addVariant(it) }
     }
 
-    fun addVariant(variant: VariantEntity) {
+    fun addVariant(variant: Variant) {
         variant.product = this
         variants.add(variant)
     }

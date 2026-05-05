@@ -5,11 +5,12 @@ import com.han.productmanagement.product.dto.ExternalProductsResponse
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Component
 import org.springframework.web.client.RestClient
+import org.springframework.web.client.body
 
 @Component
 class FammeClient(
     restClientBuilder: RestClient.Builder,
-    @Value("\${app.integration.famme-base-url}") fammeBaseUrl: String,
+    @Value($$"${app.integration.famme-base-url}") fammeBaseUrl: String,
 ) : FammeClientPort {
     private val restClient = restClientBuilder.baseUrl(fammeBaseUrl).build()
 
@@ -17,7 +18,7 @@ class FammeClient(
         return restClient.get()
             .uri("/products.json")
             .retrieve()
-            .body(ExternalProductsResponse::class.java)
+            .body<ExternalProductsResponse>()
             ?.products
             .orEmpty()
     }

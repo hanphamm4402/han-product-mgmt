@@ -1,8 +1,8 @@
 package com.han.productmanagement.product.service
 
-import com.han.productmanagement.product.domain.ProductEntity
-import com.han.productmanagement.product.domain.ProductTypeEntity
-import com.han.productmanagement.product.domain.VariantEntity
+import com.han.productmanagement.product.entity.Product
+import com.han.productmanagement.product.entity.ProductType
+import com.han.productmanagement.product.entity.Variant
 import com.han.productmanagement.product.dto.ProductFormDto
 import com.han.productmanagement.product.dto.ProductListItemDto
 import com.han.productmanagement.product.dto.ProductTypeDto
@@ -10,7 +10,7 @@ import com.han.productmanagement.product.dto.VariantFormDto
 import java.time.OffsetDateTime
 
 object ProductMapper {
-    fun toListItem(entity: ProductEntity): ProductListItemDto = ProductListItemDto(
+    fun toListItem(entity: Product): ProductListItemDto = ProductListItemDto(
         id = requireNotNull(entity.id),
         title = entity.title,
         vendor = entity.vendor,
@@ -19,7 +19,7 @@ object ProductMapper {
         productTypeName = requireNotNull(entity.productType).name,
     )
 
-    fun toForm(entity: ProductEntity): ProductFormDto = ProductFormDto(
+    fun toForm(entity: Product): ProductFormDto = ProductFormDto(
         id = entity.id,
         title = entity.title,
         productTypeId = entity.productType?.id,
@@ -39,7 +39,7 @@ object ProductMapper {
             .toMutableList(),
     )
 
-    fun toTypeDto(entity: ProductTypeEntity): ProductTypeDto = ProductTypeDto(
+    fun toTypeDto(entity: ProductType): ProductTypeDto = ProductTypeDto(
         id = requireNotNull(entity.id),
         name = entity.name,
     )
@@ -49,7 +49,7 @@ object ProductMapper {
         id: Long,
         now: OffsetDateTime,
         createdAt: OffsetDateTime = now,
-    ): VariantEntity = VariantEntity(
+    ): Variant = Variant(
         id = id,
         title = form.title.trim(),
         sku = form.sku.trim(),

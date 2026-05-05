@@ -1,4 +1,4 @@
-package com.han.productmanagement.product.domain
+package com.han.productmanagement.product.entity
 
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
@@ -7,7 +7,7 @@ import jakarta.persistence.Table
 
 @Entity
 @Table(name = "PRODUCT_TYPE")
-class ProductTypeEntity(
+class ProductType(
     @Id
     @Column(name = "ID")
     var id: Long? = null,

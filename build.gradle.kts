@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+
 plugins {
     kotlin("plugin.spring") version "2.4.0-Beta2"
     kotlin("jvm") version "2.4.0-Beta2"
@@ -52,4 +54,8 @@ kotlin {
 tasks.withType<Test> {
     useJUnitPlatform()
     jvmArgs("-Xshare:off")
+}
+val compileKotlin: KotlinCompile by tasks
+compileKotlin.compilerOptions {
+    freeCompilerArgs.set(listOf("-Xannotation-default-target=param-property"))
 }

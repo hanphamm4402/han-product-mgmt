@@ -1,8 +1,8 @@
 package com.han.productmanagement.product.service
 
 import com.han.productmanagement.common.exception.ApplicationException
-import com.han.productmanagement.product.domain.ProductEntity
-import com.han.productmanagement.product.domain.VariantEntity
+import com.han.productmanagement.product.entity.Product
+import com.han.productmanagement.product.entity.Variant
 import com.han.productmanagement.product.dto.ExternalProductDto
 import com.han.productmanagement.product.dto.ProductFormDto
 import com.han.productmanagement.product.dto.ProductListItemDto
@@ -66,7 +66,7 @@ class ProductService(
         }
         val product = form.id?.let {
             productRepository.findWithDetailsById(it) ?: throw ApplicationException("Product was not found.")
-        } ?: ProductEntity(id = productRepository.nextId(), createdAt = now)
+        } ?: Product(id = productRepository.nextId(), createdAt = now)
 
         product.title = form.title.trim()
         product.productType = productType
@@ -112,7 +112,7 @@ class ProductService(
             return false
         }
 
-        val product = ProductEntity(
+        val product = Product(
             id = productRepository.nextId(),
             createdAt = parseTimestamp(external.createdAt),
         )
@@ -125,7 +125,7 @@ class ProductService(
         product.updatedAt = parseTimestamp(external.updatedAt)
 
         val variants = external.variants.map { variant ->
-            VariantEntity(
+            Variant(
                 id = variantRepository.nextId(),
                 title = variant.title,
                 sku = variant.sku,

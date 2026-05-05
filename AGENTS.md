@@ -1,6 +1,6 @@
 # 🤖 Agents Workflow Guide
 
-This document defines how coding agents (e.g., CodeX or similar tools) should operate in this repository.
+This document defines how coding agents (e.g., Codex or similar tools) should operate in this repository.
 
 ---
 
@@ -115,7 +115,7 @@ For each task:
 * Follow naming conventions
 * Keep methods small and readable
 * Avoid unnecessary complexity
-* Prefer clarity over cleverness
+* Prefer clarity to cleverness
 
 ---
 
