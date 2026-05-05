@@ -46,7 +46,7 @@ object ProductMapper {
 
     fun toVariantEntity(
         form: VariantFormDto,
-        id: Long,
+        id: Long?,
         now: OffsetDateTime,
         createdAt: OffsetDateTime = now,
     ): Variant = Variant(

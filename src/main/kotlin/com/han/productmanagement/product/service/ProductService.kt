@@ -10,7 +10,6 @@ import com.han.productmanagement.product.dto.ProductTypeDto
 import com.han.productmanagement.product.integration.FammeClientPort
 import com.han.productmanagement.product.repository.ProductRepository
 import com.han.productmanagement.product.repository.ProductTypeRepository
-import com.han.productmanagement.product.repository.VariantRepository
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -22,20 +21,19 @@ import java.time.format.DateTimeFormatter
 class ProductService(
     private val productRepository: ProductRepository,
     private val productTypeRepository: ProductTypeRepository,
-    private val variantRepository: VariantRepository,
     private val fammeClient: FammeClientPort,
 ) {
     private val logger = LoggerFactory.getLogger(javaClass)
 
     @Transactional(readOnly = true)
     fun getProducts(): List<ProductListItemDto> =
-        productRepository.findAllWithDetails().map(ProductMapper::toListItem)
+        productRepository.findAllByOrderByUpdatedAtDescIdDesc().map(ProductMapper::toListItem)
 
     @Transactional(readOnly = true)
     fun getProductWithQuery(query: String?): List<ProductListItemDto> {
         val title = query?.trim().orEmpty()
         val products = if (title.isBlank()) {
-            productRepository.findAllWithDetails()
+            productRepository.findAllByOrderByUpdatedAtDescIdDesc()
         } else {
             productRepository.findByTitleContainingIgnoreCaseOrderByUpdatedAtDescIdDesc(title)
         }
@@ -48,7 +46,7 @@ class ProductService(
 
     @Transactional(readOnly = true)
     fun getProductById(id: Long): ProductFormDto {
-        val product = productRepository.findWithDetailsById(id)
+        val product = productRepository.findOneById(id)
             ?: throw ApplicationException("Product was not found.")
         return ProductMapper.toForm(product)
     }
@@ -65,8 +63,8 @@ class ProductService(
             ApplicationException("Product type is required.")
         }
         val product = form.id?.let {
-            productRepository.findWithDetailsById(it) ?: throw ApplicationException("Product was not found.")
-        } ?: Product(id = productRepository.nextId(), createdAt = now)
+            productRepository.findOneById(it) ?: throw ApplicationException("Product was not found.")
+        } ?: Product(createdAt = now)
 
         product.title = form.title.trim()
         product.productType = productType
@@ -76,12 +74,11 @@ class ProductService(
 
         val existingVariants = product.variants.associateBy { it.id }
         val variants = form.variants.map { variantForm ->
-            val variantId = variantForm.id ?: variantRepository.nextId()
             ProductMapper.toVariantEntity(
                 form = variantForm,
-                id = variantId,
+                id = variantForm.id,
                 now = now,
-                createdAt = existingVariants[variantId]?.createdAt ?: now,
+                createdAt = variantForm.id?.let(existingVariants::get)?.createdAt ?: now,
             )
         }
         product.replaceVariants(variants)
@@ -112,10 +109,7 @@ class ProductService(
             return false
         }
 
-        val product = Product(
-            id = productRepository.nextId(),
-            createdAt = parseTimestamp(external.createdAt),
-        )
+        val product = Product(createdAt = parseTimestamp(external.createdAt))
 
         product.title = external.title
         product.productType = productType
@@ -126,7 +120,6 @@ class ProductService(
 
         val variants = external.variants.map { variant ->
             Variant(
-                id = variantRepository.nextId(),
                 title = variant.title,
                 sku = variant.sku,
                 available = variant.available,
