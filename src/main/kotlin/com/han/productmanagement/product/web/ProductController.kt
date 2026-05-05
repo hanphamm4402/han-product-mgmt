@@ -110,6 +110,7 @@ class ProductController(
     private fun addProductDetailModel(model: Model, screenTitle: String, product: ProductFormDto) {
         model.addAttribute("screenTitle", screenTitle)
         model.addAttribute("product", product)
+        model.addAttribute("productFormAction", product.id?.let { "/product/$it" } ?: "/product")
         model.addAttribute("productTypes", productService.listProductTypes())
         model.addAttribute("pageScript", "product-detail")
     }

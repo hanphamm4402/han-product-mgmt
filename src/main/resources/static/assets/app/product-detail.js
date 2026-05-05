@@ -61,11 +61,16 @@ function addVariant() {
 }
 
 variantsList.addEventListener("click", (event) => {
-    const button = event.target.closest(".delete-variant-button");
+    const target = event.target;
+    if (!(target instanceof Element)) {
+        return;
+    }
+
+    const button = target.closest(".delete-variant-button");
     if (!button) {
         return;
     }
-    button.closest(".product-variant-row").remove();
+    button.closest(".product-variant-row")?.remove();
     renumberVariants();
 });
 

@@ -7,7 +7,7 @@
           class="wa-stack wa-gap-l"
           method="post"
           th:object="${product}"
-          th:action="${product.id == null} ? @{/product} : @{/product/{id}(id=${product.id})}">
+          th:action="${productFormAction}">
         <input type="hidden" th:field="*{id}">
 
         <wa-callout th:if="${#fields.hasGlobalErrors()}" variant="danger">

@@ -1,0 +1,10 @@
+{
+  "private": true,
+  "web-types": [
+    "web-types/htmx.json",
+    "web-types/wa.json"
+  ],
+  "dependencies": {
+    "@awesome.me/webawesome": "^3.6.0"
+  }
+}

@@ -31,7 +31,9 @@ function setButtonLoading(element, loading) {
 }
 
 function htmxSourceElement(event) {
-    return event.detail?.ctx?.sourceElement || event.detail?.elt || event.target;
+    const detail = event.detail ?? {};
+    const ctx = detail["ctx"] ?? {};
+    return ctx["sourceElement"] ?? detail["elt"] ?? event.target;
 }
 
 document.addEventListener("htmx:before:request", (event) => {
