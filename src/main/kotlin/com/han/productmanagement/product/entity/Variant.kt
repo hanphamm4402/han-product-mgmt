@@ -11,31 +11,31 @@ import java.math.BigDecimal
 import java.time.OffsetDateTime
 
 @Entity
-@Table(name = "VARIANT")
+@Table(name = "variant")
 class Variant(
     @Id
-    @Column(name = "ID")
+    @Column(name = "id")
     var id: Long? = null,
 
-    @Column(name = "TITLE", nullable = false)
+    @Column(name = "title", nullable = false)
     var title: String = "",
 
-    @Column(name = "SKU", nullable = false)
+    @Column(name = "sku", nullable = false)
     var sku: String = "",
 
-    @Column(name = "AVAILABLE", nullable = false)
+    @Column(name = "available", nullable = false)
     var available: Boolean = true,
 
-    @Column(name = "PRICE", nullable = false, precision = 19, scale = 2)
+    @Column(name = "price", nullable = false, precision = 19, scale = 2)
     var price: BigDecimal = BigDecimal.ZERO,
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "PRODUCT_ID", nullable = false)
+    @JoinColumn(name = "product_id", nullable = false)
     var product: Product? = null,
 
-    @Column(name = "CREATED_AT", nullable = false)
+    @Column(name = "created_at", nullable = false)
     var createdAt: OffsetDateTime = OffsetDateTime.now(),
 
-    @Column(name = "UPDATED_AT", nullable = false)
+    @Column(name = "updated_at", nullable = false)
     var updatedAt: OffsetDateTime = OffsetDateTime.now(),
 )

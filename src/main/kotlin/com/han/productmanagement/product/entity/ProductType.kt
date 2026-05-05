@@ -6,12 +6,12 @@ import jakarta.persistence.Id
 import jakarta.persistence.Table
 
 @Entity
-@Table(name = "PRODUCT_TYPE")
+@Table(name = "product_type")
 class ProductType(
     @Id
-    @Column(name = "ID")
+    @Column(name = "id")
     var id: Long? = null,
 
-    @Column(name = "NAME", nullable = false, unique = true)
+    @Column(name = "name", nullable = false, unique = true)
     var name: String = "",
 )

@@ -12,29 +12,29 @@ import jakarta.persistence.Table
 import java.time.OffsetDateTime
 
 @Entity
-@Table(name = "PRODUCT")
+@Table(name = "product")
 class Product(
     @Id
-    @Column(name = "ID")
+    @Column(name = "id")
     var id: Long? = null,
 
-    @Column(name = "TITLE", nullable = false)
+    @Column(name = "title", nullable = false)
     var title: String = "",
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "PRODUCT_TYPE_ID", nullable = false)
+    @JoinColumn(name = "product_type_id", nullable = false)
     var productType: ProductType? = null,
 
-    @Column(name = "BODY_HTML", columnDefinition = "TEXT")
+    @Column(name = "body_html", columnDefinition = "text")
     var bodyHtml: String? = null,
 
-    @Column(name = "CREATED_AT", nullable = false)
+    @Column(name = "created_at", nullable = false)
     var createdAt: OffsetDateTime = OffsetDateTime.now(),
 
-    @Column(name = "UPDATED_AT", nullable = false)
+    @Column(name = "updated_at", nullable = false)
     var updatedAt: OffsetDateTime = OffsetDateTime.now(),
 
-    @Column(name = "VENDOR", nullable = false)
+    @Column(name = "vendor", nullable = false)
     var vendor: String = "",
 
     @OneToMany(mappedBy = "product", cascade = [CascadeType.ALL], orphanRemoval = true)
