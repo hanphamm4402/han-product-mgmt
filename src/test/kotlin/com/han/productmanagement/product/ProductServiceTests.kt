@@ -33,7 +33,7 @@ class ProductServiceTests @Autowired constructor(
 
     @Test
     fun `product types are seeded from sample data`() {
-        val types = productService.listProductTypes().map { it.name }
+        val types = productService.getProductTypes().map { it.name }
 
         assertEquals(true, "Shorts" in types)
         assertEquals(true, "Leggings" in types)
@@ -45,7 +45,7 @@ class ProductServiceTests @Autowired constructor(
         fakeFammeClient.products = (1..55).map { externalProduct(it.toLong()) }
 
         val imported = productService.importProductsFromSource()
-        val products = productService.listProducts()
+        val products = productService.getProducts()
 
         assertEquals(50, imported)
         assertEquals(50, products.size)
@@ -56,14 +56,14 @@ class ProductServiceTests @Autowired constructor(
     fun `import creates new products instead of updating previous external products`() {
         fakeFammeClient.products = listOf(externalProduct(1, title = "Initial title", variantTitle = "Initial variant"))
         productService.importProductsFromSource()
-        val initialProductId = productService.listProducts().single().id
+        val initialProductId = productService.getProducts().single().id
 
         fakeFammeClient.products = listOf(externalProduct(1, title = "Updated title", variantTitle = "Updated variant"))
         productService.importProductsFromSource()
 
-        val products = productService.listProducts()
+        val products = productService.getProducts()
         assertEquals(2, products.size)
-        assertEquals("Initial title", productService.getProductForm(initialProductId).title)
+        assertEquals("Initial title", productService.getProductById(initialProductId).title)
         assertEquals(true, products.any { it.title == "Updated title" })
     }
 
@@ -73,7 +73,7 @@ class ProductServiceTests @Autowired constructor(
 
         productService.importProductsFromSource()
 
-        val importedProduct = productService.listProducts().single()
+        val importedProduct = productService.getProducts().single()
         assertEquals(false, importedProduct.id == 999L)
     }
 
@@ -88,7 +88,7 @@ class ProductServiceTests @Autowired constructor(
         val imported = productService.importProductsFromSource()
 
         assertEquals(1, imported)
-        assertEquals(1, productService.listProducts().size)
+        assertEquals(1, productService.getProducts().size)
     }
 
     @Test
@@ -114,11 +114,11 @@ class ProductServiceTests @Autowired constructor(
             ),
         )
 
-        val filtered = productService.listProductsByTitle("short")
+        val filtered = productService.getProductWithQuery("short")
 
         assertEquals(1, filtered.size)
         assertEquals("Classic Shorts", filtered.single().title)
-        assertEquals(2, productService.listProductsByTitle(" ").size)
+        assertEquals(2, productService.getProductWithQuery(" ").size)
     }
 
     @Test
@@ -148,14 +148,14 @@ class ProductServiceTests @Autowired constructor(
             ),
         )
 
-        val existing = productService.getProductForm(productId)
+        val existing = productService.getProductById(productId)
         existing.title = "Updated manual product"
         existing.variants.single().price = BigDecimal("20")
         productService.saveProduct(existing)
 
-        assertEquals("Updated manual product", productService.getProductForm(productId).title)
+        assertEquals("Updated manual product", productService.getProductById(productId).title)
 
-        productService.deleteProduct(productId)
+        productService.deleteProductById(productId)
 
         assertEquals(false, productRepository.existsById(productId))
     }

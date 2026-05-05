@@ -40,7 +40,7 @@ class ProductController(
 
     @GetMapping("/product/{id}")
     fun detail(@PathVariable id: Long, model: Model): String {
-        addProductDetailModel(model, "Product Detail", productService.getProductForm(id))
+        addProductDetailModel(model, "Product Detail", productService.getProductById(id))
         return "product-detail"
     }
 
@@ -74,7 +74,7 @@ class ProductController(
         @RequestParam("query", required = false) query: String?,
         model: Model,
     ): String {
-        productService.deleteProduct(id)
+        productService.deleteProductById(id)
         addProductListModel(model, query)
         return "fragments/product-table :: productResults"
     }
@@ -102,7 +102,7 @@ class ProductController(
     }
 
     private fun addProductListModel(model: Model, query: String? = null) {
-        val products = productService.listProductsByTitle(query)
+        val products = productService.getProductWithQuery(query)
         model.addAttribute("products", products)
         model.addAttribute("productCount", products.size)
     }
@@ -111,7 +111,7 @@ class ProductController(
         model.addAttribute("screenTitle", screenTitle)
         model.addAttribute("product", product)
         model.addAttribute("productFormAction", product.id?.let { "/product/$it" } ?: "/product")
-        model.addAttribute("productTypes", productService.listProductTypes())
+        model.addAttribute("productTypes", productService.getProductTypes())
         model.addAttribute("pageScript", "product-detail")
     }
 }

@@ -28,11 +28,11 @@ class ProductService(
     private val logger = LoggerFactory.getLogger(javaClass)
 
     @Transactional(readOnly = true)
-    fun listProducts(): List<ProductListItemDto> =
+    fun getProducts(): List<ProductListItemDto> =
         productRepository.findAllWithDetails().map(ProductMapper::toListItem)
 
     @Transactional(readOnly = true)
-    fun listProductsByTitle(query: String?): List<ProductListItemDto> {
+    fun getProductWithQuery(query: String?): List<ProductListItemDto> {
         val title = query?.trim().orEmpty()
         val products = if (title.isBlank()) {
             productRepository.findAllWithDetails()
@@ -43,11 +43,11 @@ class ProductService(
     }
 
     @Transactional(readOnly = true)
-    fun listProductTypes(): List<ProductTypeDto> =
+    fun getProductTypes(): List<ProductTypeDto> =
         productTypeRepository.findAll().sortedBy { it.name }.map(ProductMapper::toTypeDto)
 
     @Transactional(readOnly = true)
-    fun getProductForm(id: Long): ProductFormDto {
+    fun getProductById(id: Long): ProductFormDto {
         val product = productRepository.findWithDetailsById(id)
             ?: throw ApplicationException("Product was not found.")
         return ProductMapper.toForm(product)
@@ -89,7 +89,7 @@ class ProductService(
     }
 
     @Transactional
-    fun deleteProduct(id: Long) {
+    fun deleteProductById(id: Long) {
         productRepository.deleteById(id)
     }
 
@@ -101,10 +101,10 @@ class ProductService(
 
     @Transactional
     fun importProducts(products: List<ExternalProductDto>): Int {
-        return products.take(50).count(::createExternalProduct)
+        return products.take(50).count(::createFromExternalProduct)
     }
 
-    private fun createExternalProduct(external: ExternalProductDto): Boolean {
+    private fun createFromExternalProduct(external: ExternalProductDto): Boolean {
         val productTypeName = external.productType.trim()
         val productType = productTypeName.takeIf(String::isNotBlank)?.let(productTypeRepository::findByName)
         if (productType == null) {

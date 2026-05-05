@@ -27,7 +27,7 @@
                        hx-post="/product/load"
                        hx-target="#product-results"
                        hx-swap="outerHTML"
-                       hx-on::after-request="document.querySelector('#product-search').value = ''">
+                       hx-on::after:request="document.querySelector('#product-search').value = ''">
                 <wa-icon slot="start" name="download"></wa-icon>
                 Load products
             </wa-button>
