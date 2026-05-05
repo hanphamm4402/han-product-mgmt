@@ -59,7 +59,7 @@
                                        th:hx-delete="@{/product/{id}(id=${product.id})}"
                                        hx-target="#product-results"
                                        hx-swap="outerHTML"
-                                       hx-include="#product-search">
+                                       hx-vals="js:{query: document.querySelector('#product-search').value}">
                                 <wa-icon slot="start" name="trash"></wa-icon>
                                 Delete
                             </wa-button>
