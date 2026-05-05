@@ -44,11 +44,11 @@ document.addEventListener("htmx:after:request", (event) => {
     setButtonLoading(htmxSourceElement(event), false);
 });
 
-document.addEventListener("htmx:beforeRequest", (event) => {
+document.addEventListener("htmx:before:request", (event) => {
     setButtonLoading(htmxSourceElement(event), true);
 });
 
-document.addEventListener("htmx:afterRequest", (event) => {
+document.addEventListener("htmx:after:request", (event) => {
     setButtonLoading(htmxSourceElement(event), false);
 });
 

@@ -3,7 +3,7 @@
 <section id="product-list-content" class="wa-stack wa-gap-l" th:fragment="productListContent">
     <div class="wa-cluster wa-gap-s wa-align-items-center">
         <div class="wa-heading-xl">Product List</div>
-        <wa-badge id="product-count-badge" variant="brand" th:text="${productCount}">0</wa-badge>
+        <th:block th:replace="~{fragments/product-table :: productCountBadge(false)}"></th:block>
     </div>
 
     <div class="wa-split wa-gap-m wa-align-items-end">

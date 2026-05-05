@@ -1,6 +1,17 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <body>
+<wa-badge th:fragment="productCountBadge(outOfBand)"
+          id="product-count-badge"
+          variant="brand"
+          th:attr="hx-swap-oob=${outOfBand} ? 'true' : null"
+          th:text="${productCount}">0</wa-badge>
+
+<th:block th:fragment="productResultsUpdate">
+    <th:block th:replace="~{fragments/product-table :: productCountBadge(true)}"></th:block>
+    <th:block th:replace="~{fragments/product-table :: productResults}"></th:block>
+</th:block>
+
 <div id="product-results" class="wa-stack wa-gap-m" th:fragment="productResults">
     <wa-callout th:if="${tableError}" variant="danger">
         <wa-icon slot="icon" name="circle-exclamation"></wa-icon>

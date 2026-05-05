@@ -38,7 +38,7 @@ class ProductController(
             model.addAttribute("tableError", "Products could not be loaded from Famme right now.")
         }
         addProductListModel(model)
-        return "fragments/product-table :: productResults"
+        return "fragments/product-table :: productResultsUpdate"
     }
 
     @GetMapping("/product/{id}")
@@ -83,7 +83,7 @@ class ProductController(
             model.addAttribute("tableError", "Product could not be deleted right now.")
         }
         addProductListModel(model, query)
-        return "fragments/product-table :: productResults"
+        return "fragments/product-table :: productResultsUpdate"
     }
 
     private fun save(

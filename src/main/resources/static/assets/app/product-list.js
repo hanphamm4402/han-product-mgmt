@@ -6,7 +6,7 @@ function refreshProductCount() {
     countBadge.textContent = document.querySelectorAll("[data-product-row]").length.toString();
 }
 
-document.body.addEventListener("htmx:afterSwap", () => {
+document.body.addEventListener("htmx:after:swap", () => {
     document.querySelectorAll("wa-dialog[open]").forEach((dialog) => {
         dialog.removeAttribute("open");
     });
